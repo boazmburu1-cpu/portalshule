@@ -1,0 +1,388 @@
+Claude
+
+
+School portal app · HTML
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>School Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --bg:#f4f7fb;
+  --surface:#ffffff;
+  --surface-soft:#f8fafc;
+  --text:#172235;
+  --muted:#68758a;
+  --border:#e2e8f0;
+  --primary:#176b55;
+  --primary-dark:#105340;
+  --primary-soft:#e3f3ed;
+  --danger:#b42318;
+  --danger-soft:#fff0ee;
+  --warning:#946200;
+  --warning-soft:#fff5d9;
+  --shadow:0 10px 30px rgba(21,42,65,.07);
+  --radius:16px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(ellipse at top left,rgba(23,107,85,.08),transparent 36rem),
+    var(--bg);
+  color:var(--text);
+  font:16px/1.6 "Atkinson Hyperlegible",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+button,input,select{font:inherit}
+header{
+  position:sticky;top:0;z-index:20;
+  display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;
+  padding:15px clamp(16px,4vw,42px);
+  background:linear-gradient(115deg,#124b3d,#19745a);
+  color:#fff;
+  box-shadow:0 5px 20px rgba(10,50,39,.18);
+}
+header b{font-size:19px;letter-spacing:.2px}
+header span{margin-left:auto;font-size:14px;color:rgba(255,255,255,.88)}
+header button{
+  background:rgba(255,255,255,.12);color:#fff;
+  border:1px solid rgba(255,255,255,.42);
+}
+header button:hover{background:rgba(255,255,255,.22)}
+main{width:min(1120px,100%);margin:0 auto;padding:28px clamp(14px,3vw,30px) 48px}
+main[style*="max-width:440px"],main[style*="max-width:560px"]{padding-top:7vh}
+h2{font-size:19px;line-height:1.3;margin:0 0 15px;color:var(--text)}
+p{margin:10px 0}
+.card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius);
+  padding:clamp(16px,2.2vw,24px);
+  margin-bottom:18px;
+  box-shadow:var(--shadow);
+}
+.card h2{display:flex;align-items:center;gap:9px}
+.card h2:before{
+  content:"";display:inline-block;width:5px;height:19px;flex:0 0 5px;
+  border-radius:8px;background:var(--primary);
+}
+.mut{color:var(--muted);font-size:14px}
+.wrap{overflow-x:auto;border:1px solid var(--border);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:480px}
+th,td{border-bottom:1px solid var(--border);padding:11px 12px;text-align:left;vertical-align:middle}
+th{
+  background:var(--surface-soft);font-size:12px;color:var(--muted);
+  font-weight:700;text-transform:uppercase;letter-spacing:.045em;
+  white-space:nowrap;
+}
+tr:last-child td{border-bottom:0}
+tbody tr:hover td{background:#f9fbfd}
+input,select,button{
+  font:inherit;padding:10px 12px;border-radius:10px;
+  border:1px solid #d5deea;background:var(--surface);color:var(--text);
+  min-height:42px;transition:border-color .18s,box-shadow .18s,background .18s,transform .18s;
+}
+input,select{width:100%;min-width:0}
+input:hover,select:hover{border-color:#aab9ca}
+input:focus,select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(23,107,85,.13)}
+input[type=checkbox]{width:18px;min-height:18px;height:18px;accent-color:var(--primary);vertical-align:middle}
+input[type=date],input[type=number]{max-width:100%}
+button{width:auto;cursor:pointer;font-weight:700}
+button:hover{transform:translateY(-1px);border-color:#aab9ca}
+button:active{transform:translateY(0)}
+button.p{background:var(--primary);color:#fff;border-color:var(--primary);box-shadow:0 4px 10px rgba(23,107,85,.15)}
+button.p:hover{background:var(--primary-dark);border-color:var(--primary-dark)}
+button.d{color:var(--danger);border-color:#f0c7c2;background:#fffafa}
+button.d:hover{background:var(--danger-soft)}
+button.s{padding:5px 10px;min-height:32px;font-size:13px;border-radius:8px}
+:focus-visible{outline:3px solid #d99a22;outline-offset:2px}
+form{display:flex;flex-wrap:wrap;gap:13px;align-items:end}
+form label{display:flex;flex:1 1 190px;flex-direction:column;gap:6px;font-size:13px;font-weight:700;color:#536176}
+form label input,form label select{font-weight:400}
+fieldset{padding:13px 15px;margin:2px 0 8px}
+legend{padding:0 7px}
+.msg{padding:13px 15px;border-radius:12px;margin-bottom:16px;font-weight:700;border:1px solid transparent}
+.ok{background:var(--primary-soft);color:#145b43;border-color:#c7e8d9}
+.bad{background:var(--danger-soft);color:var(--danger);border-color:#f3d0cb}
+.warn{background:var(--warning-soft);color:#795300;border-color:#f0dfa9}
+.note{font-weight:400;background:var(--warning-soft);color:var(--text);padding:12px 14px;border-radius:10px;margin-bottom:9px;border:1px solid #f0dfa9}
+.note.old{background:var(--surface-soft);border:1px solid var(--border);color:var(--muted)}
+.tag{display:inline-flex;align-items:center;font-size:12px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--warning-soft);color:var(--warning);white-space:nowrap}
+.tag.a{background:var(--primary-soft);color:var(--primary-dark)}
+.bar{height:9px;border-radius:99px;background:#e8edf2;overflow:hidden;min-width:90px}
+.bar i{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#1b8061,#58b88b)}
+.tabs{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:16px}
+.tabs button{background:#fff;color:var(--muted);border-color:var(--border);font-size:14px}
+.tabs button.on{background:var(--primary);color:#fff;border-color:var(--primary)}
+.tabs button:hover{color:var(--primary)}
+.tabs button.on:hover{color:#fff}
+.card>form+ p,.card form+p{margin-top:13px}
+.card>div[style*="display:flex"]{gap:8px}
+@media(max-width:640px){
+  header{padding:13px 15px}
+  header b{width:100%}
+  header span{margin-left:0;flex:1}
+  main{padding:18px 12px 36px}
+  .card{padding:15px;border-radius:13px}
+  form{align-items:stretch}
+  form label{flex:1 1 100%}
+  form button{width:100%}
+  .tabs{display:grid;grid-template-columns:1fr}
+  .tabs button{width:100%}
+  table{font-size:13px}
+  th,td{padding:9px 10px}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{scroll-behavior:auto!important;transition:none!important}
+}
+</style></head><body><div id="app"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.js"></script>
+<script>
+// ===== 1. PASTE YOUR SUPABASE DETAILS HERE (Project Settings > API) =====
+const SUPABASE_URL="https://fyogerdtcpppuktvapft.supabase.co/rest/v1/";
+const SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZ5b2dlcmR0Y3BwcHVrdHZhcGZ0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTM3OTEzNzQsImV4cCI6MjEwOTM2NzM3NH0.E43OUbB7UqyJvLQgAQ5cJnKWLadlBkUMSgaLE4wC6ik";   // the public "anon" key only, never the service_role key
+// =========================================================================
+const configured=!SUPABASE_URL.includes("YOUR-PROJECT")&&window.supabase;
+const sb=configured?supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
+const $=s=>document.querySelector(s);
+const esc=t=>String(t??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const money=n=>"KES "+Number(n||0).toLocaleString("en-KE",{maximumFractionDigits:2});
+const f1=v=>v==null?"-":Number(v).toFixed(1);
+const mean=a=>a.length?a.reduce((x,y)=>x+y,0)/a.length:null;
+const remark=s=>s>=80?"Excellent work. Keep it up.":s>=65?"Very good performance.":s>=50?"Good effort; aim higher.":s>=40?"Fair. More practice is needed.":"Needs support. Please see the teacher.";
+const RN={parent:"Parent",subject_teacher:"Teacher",class_teacher:"Teacher",deputy:"Deputy head",head:"Head teacher",admin:"Admin"};
+const q=async p=>{const{data,error}=await p;if(error)throw error;return data||[]};
+const one=async p=>{const{data,error}=await p;if(error)throw error;return data};
+const rpc=(n,a)=>one(sb.rpc(n,a||{}));
+// Calls the deployed Supabase Edge Function using the signed-in user's session.
+// supabase-js attaches the current access token; do not put the service-role key here.
+async function fn(body){
+  const{data,error}=await sb.functions.invoke("admin-users",{body});
+  if(error){
+    let message=error.message||"The admin-users request failed.";
+    try{
+      const response=error.context;
+      if(response && typeof response.json==="function"){
+        const payload=await response.json();
+        if(payload?.error)message=payload.error;
+      }
+      if(response?.status===404)message="The server function admin-users is not deployed. Deploy it with: supabase functions deploy admin-users";
+    }catch(_){}
+    throw new Error(message);
+  }
+  if(data?.error)throw new Error(data.error);
+  return data;
+}
+const settings=()=>one(sb.from("school_settings").select("*").single());
+const fd=e=>{e.preventDefault();return Object.fromEntries(new FormData(e.target))};
+const tbl=(h,r)=>`<div class="wrap"><table><tr>${h.map(x=>`<th>${x}</th>`).join("")}</tr>${r.join("")||`<tr><td colspan="${h.length}" class="mut">Nothing here yet.</td></tr>`}</table></div>`;
+const tag=s=>`<span class="tag ${s==="accepted"||s==="active"?"a":""}">${s}</span>`;
+const bar=v=>`<div class="bar"><i style="width:${Math.max(0,Math.min(100,v||0))}%"></i></div>`;
+const opts=(a,v)=>a.map(x=>`<option value="${esc(x[0])}" ${x[0]==v?"selected":""}>${esc(x[1])}</option>`).join("");
+const when=t=>new Date(t).toLocaleDateString("en-KE");
+let me=null,F=null,mode="login",yeAsk=false;
+const fl=(t,k)=>{F={t,k}};
+async function act(fn,msg){
+  try{await fn();if(msg)fl(msg,"ok")}
+  catch(e){let m=e.message||String(e);if(/foreign key/i.test(m))m="This item is still in use and cannot be removed.";fl(esc(m),"bad")}
+  render();
+}
+ 
+// ----- sign in / register -----
+async function loadMe(id){
+  const p=await one(sb.from("profiles").select("*").eq("id",id).single());
+  if(p.status!=="active"){
+    fl(p.status==="pending"?"Your registration is pending approval by the head teacher. You can sign in once it is approved.":"This account cannot sign in. Please contact the school.",p.status==="pending"?"warn":"bad");
+    await sb.auth.signOut();me=null;
+  }else me=p;
+}
+function authView(){return`<main style="max-width:440px"><h2 style="font-size:24px">School Portal</h2>
+<div class="tabs"><button class="${mode==="login"?"on":""}" onclick="mode='login';F=null;render()">Sign in</button><button class="${mode==="reg"?"on":""}" onclick="mode='reg';F=null;render()">Parent registration</button><button class="${mode==="staff"?"on":""}" onclick="mode='staff';F=null;render()">Staff sign-up</button></div>
+${F?`<div class="msg ${F.k}">${F.t}</div>`:""}<div class="card">${mode==="login"
+?`<form onsubmit="H.login(event)"><label style="flex:1 1 100%">Email<input name="email" type="email" required autocomplete="username"></label><label style="flex:1 1 100%">Password<input name="pw" type="password" required autocomplete="current-password"></label><button class="p">Sign in</button></form>`
+:mode==="staff"?`<form onsubmit="H.staffUp(event)"><label style="flex:1 1 100%">Full name<input name="name" required></label><label style="flex:1 1 100%">Email the school invited<input name="email" type="email" required></label><label style="flex:1 1 100%">Choose a password (6+ characters)<input name="pw" type="password" minlength="6" required></label><button class="p">Create staff account</button></form><p class="mut">Use the email address the head teacher or admin gave the school. After the admin approves your invitation and you confirm your email, your account opens with your class and subjects.</p>`:`<form onsubmit="H.register(event)"><label style="flex:1 1 100%">Full name<input name="name" required></label><label style="flex:1 1 100%">Phone (07…)<input name="phone" required></label><label style="flex:1 1 100%">Email<input name="email" type="email" required></label><label style="flex:1 1 100%">Password (6+ characters)<input name="pw" type="password" minlength="6" required></label><button class="p">Register</button></form><p class="mut">New accounts stay pending until the head teacher approves them. One parent uses one account for all their children.</p>`}</div></main>`}
+function setupView(){return`<main style="max-width:560px"><div class="card"><h2>Connect this page to your database</h2><p>Open this file in a text editor and replace the two values near the top of the script:</p><p><b>SUPABASE_URL</b> and <b>SUPABASE_ANON_KEY</b></p><p class="mut">Find them in Supabase under Project Settings, then API. Use the public anon key only. ${window.supabase?"":"The Supabase library did not load: check your internet connection."}</p></div></main>`}
+ 
+// ----- shared pieces -----
+function shell(body){return`<header><b>School Portal</b><span>${esc(me.full_name)} · ${RN[me.role]}</span><button onclick="H.out()">Sign out</button></header><main>${F?`<div class="msg ${F.k}">${F.t}</div>`:""}${body}</main>`}
+function avgCard(avg){
+  const cl=[...new Set(avg.map(r=>r.class_name))].sort(),su=[...new Set(avg.filter(r=>r.subject_name).map(r=>r.subject_name))].sort();
+  const g=(c,s)=>{const r=avg.find(x=>x.class_name===c&&(x.subject_name??null)===s);return r?f1(r.average):"-"};
+  return`<div class="card"><h2>Class averages</h2>${tbl(["Class",...su,"Total"],cl.map(c=>`<tr><td><b>${esc(c)}</b></td>${su.map(s=>`<td>${g(c,s)}</td>`).join("")}<td><b>${g(c,null)}</b></td></tr>`))}</div>`}
+const payRows=l=>l.map(p=>`<tr><td>${when(p.created_at)}</td><td>${esc(p.students?.full_name)}</td><td>${money(p.amount)}</td><td>${p.method}</td><td>${esc(p.reference)}</td></tr>`);
+const payH=["Date","Student","Amount","Method","Reference"];
+ 
+const INV={pending:"Waiting for admin",approved:"Approved: waiting for sign-up",used:"Active",rejected:"Not approved"};
+function duty(i,cls,subj){
+  if(i.role==="head"||i.role==="deputy")return RN[i.role];
+  const cn=Object.fromEntries(cls.map(c=>[c.id,c.name])),sn=Object.fromEntries(subj.map(x=>[x.id,x.name])),t=i.teaching||[],p=[];
+  if(i.class_id)p.push("Class teacher of "+(cn[i.class_id]||"?"));
+  if(t.length)p.push("Teaches "+[...new Set(t.map(x=>sn[x.subject_id]))].join(", ")+" in "+[...new Set(t.map(x=>cn[x.class_id]))].join(", "));
+  return p.join(". ");
+}
+const VIEWS={};
+// ===== PARENT =====
+VIEWS.parent=async()=>{
+  const[set,kids,sum,marks,att,pays,nts,cls]=await Promise.all([settings(),
+    q(sb.from("students").select("id,full_name,status,remark,classes(name)").order("created_at")),
+    q(sb.from("student_fee_summary").select("*")),
+    q(sb.from("marks").select("student_id,score,review,academic_year,subjects(name)")),
+    q(sb.from("attendance_records").select("student_id,present,attendance_sessions!inner(academic_year)")),
+    q(sb.from("payments").select("amount,method,reference,created_at,students(full_name)").order("created_at",{ascending:false})),
+    q(sb.from("notifications").select("*").order("created_at",{ascending:false}).limit(8)),
+    q(sb.from("classes").select("id,name").order("name"))]);
+  const fees=sum.filter(s=>s.status==="accepted"||(s.status==="transferred"&&s.balance>0));
+  const owe={};await Promise.all(fees.filter(s=>s.balance>0).map(async s=>{owe[s.student_id]=await q(sb.rpc("student_owing",{sid:s.student_id}))}));
+  const due=fees.filter(s=>s.balance>0),enrolled=kids.filter(k=>k.status==="accepted");
+  const unread=nts.filter(n=>!n.read).length;
+  if(unread)sb.from("notifications").update({read:true}).eq("user_id",me.id).eq("read",false).then(()=>{});
+  return`<div class="card"><h2>Notifications (${unread} new)</h2>${nts.map(n=>`<div class="note ${n.read?"old":""}">${esc(n.body)}<div class="mut">${when(n.created_at)}</div></div>`).join("")||'<p class="mut">No notifications yet.</p>'}</div>
+<div class="card"><h2>Fees</h2>${tbl(["Student","Fee due","Paid","Balance","Progress"],fees.map(s=>`<tr><td>${esc(s.full_name)}</td><td>${money(s.total_due)}</td><td>${money(s.total_paid)}</td><td><b>${money(s.balance)}</b>${(owe[s.student_id]||[]).length>1?`<div class="mut">${owe[s.student_id].map(o=>`${o.academic_year}: ${money(o.unpaid)}`).join(" + ")} (${owe[s.student_id].length} years unpaid)</div>`:""}${(owe[s.student_id]||[]).length>=3?`<div style="color:var(--no);font-size:14px">3-year limit reached. Pay the oldest year to allow promotion.</div>`:""}</td><td>${bar(s.total_due?s.total_paid/s.total_due*100:0)}</td></tr>`))}
+<div style="display:flex;justify-content:flex-end;margin-top:8px"><button class="s" onclick="render()">Refresh</button></div></div>
+<div class="card"><h2>Pay fees with M-Pesa</h2>${due.length?`<form onsubmit="H.mpesa(event)"><label>Student<select name="s">${opts(due.map(s=>[s.student_id,`${s.full_name} (balance ${money(s.balance)})`]))}</select></label><label>M-Pesa phone<input name="phone" value="${esc(me.phone||"")}" required></label><label>Amount (KES)<input name="amt" type="number" min="1" required></label><button class="p">Send M-Pesa prompt</button></form><p class="mut">You will get a prompt on your phone. Enter your M-Pesa PIN to approve.</p>`:'<p class="mut">All fees are fully paid.</p>'}</div>
+<div class="card"><h2>Results</h2>${enrolled.map(k=>{const ms=marks.filter(m=>m.student_id===k.id&&m.academic_year===set.current_year),av=mean(ms.map(m=>+m.score)),ar=att.filter(a=>a.student_id===k.id&&a.attendance_sessions.academic_year===set.current_year);
+return`<div style="margin-bottom:16px"><b>${esc(k.full_name)}</b> <span class="mut">${esc(k.classes?.name)} · average ${f1(av)}</span>${tbl(["Subject","Score","Teacher review"],ms.map(m=>`<tr><td>${esc(m.subjects?.name)}</td><td>${m.score}</td><td>${esc(m.review)}</td></tr>`))}<p class="mut">Remark: ${esc(k.remark||(av==null?"-":remark(av)))} · Attendance: ${ar.filter(a=>a.present).length}/${ar.length} sessions</p></div>`}).join("")||'<p class="mut">No enrolled students yet.</p>'}</div>
+<div class="card"><h2>Payment history</h2>${tbl(payH,payRows(pays))}</div>
+<div class="card"><h2>Add a student</h2><form onsubmit="H.addKid(event)"><label>Student name<input name="name" required></label><label>Class<select name="cls">${opts(cls.map(c=>[c.id,c.name]))}</select></label><button class="p">Add student</button></form><p class="mut">All your children stay under this one account. The class teacher must accept each student.</p>${kids.filter(k=>k.status!=="accepted").map(k=>`<div>${esc(k.full_name)} (${esc(k.classes?.name)}) ${tag(k.status)}</div>`).join("")}</div>`};
+ 
+// ===== SUBJECT TEACHER =====
+const subjectPart=async()=>{
+  const set=await settings();
+  const[as,sts,marks]=await Promise.all([q(sb.from("teaching_assignments").select("subject_id,class_id,subjects(name),classes(name)").eq("teacher_id",me.id)),
+    q(sb.from("students").select("id,full_name,classes(name)").eq("status","accepted").order("full_name")),
+    q(sb.from("marks").select("id,score,review,subject_id,students(full_name,class_id,classes(name)),subjects(name)").eq("academic_year",set.current_year))]);
+  if(!as.length)return"";
+  const subs=[...new Map(as.map(a=>[a.subject_id,a.subjects.name]))],cls=[...new Set(as.map(a=>a.classes.name))];
+  return`<div class="card"><h2>Add marks and review</h2><p class="mut">You teach ${esc(subs.map(s=>s[1]).join(", ")||"no subjects yet")} in ${esc(cls.join(", ")||"no classes yet")}. Only subject teachers can add marks.</p>
+<form onsubmit="H.mark(event)"><label>Student<select name="s">${opts(sts.map(s=>[s.id,`${s.full_name} (${s.classes?.name})`]))}</select></label><label>Subject<select name="sub">${opts(subs)}</select></label><label>Score (0-100)<input name="sc" type="number" min="0" max="100" step="0.5" required></label><label style="flex:1 1 220px">Review<input name="rev" placeholder="e.g. Improving, revise fractions"></label><button class="p">Save marks</button></form></div>
+<div class="card"><h2>Marks I manage</h2>${tbl(["Student","Class","Subject","Score","Review (edit)"],marks.filter(m=>as.some(a=>a.subject_id===m.subject_id&&a.class_id===m.students?.class_id)).map(m=>`<tr><td>${esc(m.students?.full_name)}</td><td>${esc(m.students?.classes?.name)}</td><td>${esc(m.subjects?.name)}</td><td>${m.score}</td><td><input style="width:100%" value="${esc(m.review)}" onchange="H.rev('${m.id}',this.value)"></td></tr>`))}</div>`};
+ 
+// ===== CLASS TEACHER =====
+const classPart=async()=>{
+  const ct=await one(sb.from("class_teachers").select("class_id,classes(name)").eq("teacher_id",me.id).maybeSingle());
+  if(!ct)return"";
+  const set=await settings();
+  const[sts,marks,sum]=await Promise.all([q(sb.from("students").select("id,full_name,status,remark").eq("class_id",ct.class_id).order("full_name")),
+    q(sb.from("marks").select("id,student_id,score,review,subjects(name)").eq("academic_year",set.current_year)),
+    q(sb.from("student_fee_summary").select("*").eq("class_id",ct.class_id))]);
+  const pe=sts.filter(s=>s.status==="pending"),ac=sts.filter(s=>s.status==="accepted"),nm=Object.fromEntries(ac.map(s=>[s.id,s.full_name])),owing=sum.filter(s=>s.status==="accepted"&&s.balance>0);
+  return`<div class="card"><h2>Students awaiting acceptance (${esc(ct.classes.name)})</h2>${tbl(["Name",""],pe.map(s=>`<tr><td>${esc(s.full_name)}</td><td><button class="s p" onclick="H.decide('${s.id}',true)">Accept</button> <button class="s d" onclick="H.decide('${s.id}',false)">Reject</button></td></tr>`))}</div>
+<div class="card"><h2>Attendance</h2><form onsubmit="H.att(event)" style="flex-direction:column;align-items:start"><label>Date<input type="date" name="date" value="${new Date().toISOString().slice(0,10)}" max="${new Date().toISOString().slice(0,10)}" required></label>${ac.map(s=>`<label style="flex-direction:row;gap:8px;align-items:center;color:var(--tx)"><input type="checkbox" name="p" value="${s.id}" checked> ${esc(s.full_name)}</label>`).join("")||'<span class="mut">No students yet.</span>'}<button class="p">Save attendance</button></form></div>
+<div class="card"><h2>Marks (manual correction)</h2><p class="mut">Subject teachers add marks. You can correct a score here; every correction is recorded.</p>${tbl(["Student","Subject","Score","Review"],marks.filter(m=>nm[m.student_id]).map(m=>`<tr><td>${esc(nm[m.student_id])}</td><td>${esc(m.subjects?.name)}</td><td><input type="number" min="0" max="100" step="0.5" style="width:90px" value="${m.score}" onchange="H.fix('${m.id}',this.value)"></td><td>${esc(m.review)}</td></tr>`))}</div>
+<div class="card"><h2>Report remarks</h2>${tbl(["Student","Average","Remark (auto, editable)"],ac.map(s=>{const av=mean(marks.filter(m=>m.student_id===s.id).map(m=>+m.score));return`<tr><td>${esc(s.full_name)}</td><td>${f1(av)}</td><td><input style="width:100%" value="${esc(s.remark||(av==null?"":remark(av)))}" onchange="H.remk('${s.id}',this.value)"></td></tr>`}))}</div>
+<div class="card"><h2>Fees for ${esc(ct.classes.name)}</h2>${tbl(["Student","Fee due","Paid","Balance"],sum.filter(s=>s.status==="accepted").map(s=>`<tr><td>${esc(s.full_name)}</td><td>${money(s.total_due)}</td><td>${money(s.total_paid)}</td><td>${money(s.balance)}</td></tr>`))}
+<h2 style="margin-top:16px">Update balance (limited)</h2><form onsubmit="H.adj(event)"><label>Student<select name="s">${opts(owing.map(s=>[s.student_id,`${s.full_name} (${money(s.balance)})`]))}</select></label><label>Reduce by (KES)<input name="amt" type="number" min="1" max="${set.adj_max}" required></label><label style="flex:1 1 200px">Reason<input name="why" required></label><button class="p">Update balance</button></form><p class="mut">Limits: ${money(set.adj_max)} per entry and ${money(set.adj_total_max)} per student in total. A reason is required, and every change is recorded for the deputy.</p></div>`};
+ 
+// A teacher account does both jobs: sections appear for whatever the head assigned (a class, subjects, or both).
+VIEWS.class_teacher=VIEWS.subject_teacher=async()=>{
+  const[c,s]=await Promise.all([classPart(),subjectPart()]);
+  return(c+s)||'<div class="msg warn">No class or subjects are assigned to you yet. Ask the head teacher.</div>'};
+ 
+// ===== DEPUTY =====
+VIEWS.deputy=async()=>{
+  const[avg,sum,parents,pays]=await Promise.all([rpc("class_averages"),
+    q(sb.from("student_fee_summary").select("*").gt("balance",0).in("status",["accepted","transferred"]).order("balance",{ascending:false})),
+    q(sb.from("profiles").select("id,full_name,phone").eq("role","parent")),
+    q(sb.from("payments").select("amount,method,reference,created_at,students(full_name)").order("created_at",{ascending:false}).limit(15))]);
+  const pm=Object.fromEntries(parents.map(p=>[p.id,p]));
+  return`${avgCard(avg||[])}
+<div class="card"><h2>Record a fee payment</h2><form onsubmit="H.pay(event)"><label>Student<select name="s">${opts(sum.map(s=>[s.student_id,`${s.full_name} (${money(s.balance)})`]))}</select></label><label>Method<select name="method"><option value="cheque">Cheque</option><option value="cash">Cash</option></select></label><label>Amount (KES)<input name="amt" type="number" min="1" required></label><label>Cheque / receipt no.<input name="ref" required></label><label style="flex-direction:row;gap:6px;align-items:center"><input type="checkbox" name="ok"> Confirm cash</label><button class="p">Record payment</button></form><p class="mut">Cash is not recommended. Prefer cheque or M-Pesa. Cash needs the confirmation box ticked.</p></div>
+<div class="card"><h2>Outstanding fees: prompt parent</h2>${tbl(["Student","Parent","Phone","Balance",""],sum.map(s=>{const p=pm[s.parent_id]||{};return`<tr><td>${esc(s.full_name)}</td><td>${esc(p.full_name)}</td><td>${esc(p.phone)}</td><td>${money(s.balance)}</td><td><button class="s p" onclick="H.prompt('${s.student_id}')">Prompt parent</button></td></tr>`}))}</div>
+<div class="card"><h2>Recent fee records</h2>${tbl(payH,payRows(pays))}</div>`};
+ 
+// ===== HEAD =====
+VIEWS.head=async()=>{
+  const set=await settings();
+  const[cls,subj,inv]=await Promise.all([q(sb.from("classes").select("id,name").order("name")),q(sb.from("subjects").select("id,name").order("name")),q(sb.from("staff_invites").select("*").order("created_at",{ascending:false}))]);
+  const[allp,pp,avg,sum]=await Promise.all([q(sb.from("profiles").select("id,full_name,phone,email,status").eq("role","parent").order("full_name")),q(sb.from("profiles").select("id,full_name,phone,email").eq("role","parent").eq("status","pending")),rpc("class_averages"),
+    q(sb.from("student_fee_summary").select("*").gt("balance",0).order("balance",{ascending:false}))]);
+  return`<div class="card"><h2>Parents pending approval (${pp.length})</h2>${tbl(["Name","Phone","Email",""],pp.map(p=>`<tr><td>${esc(p.full_name)}</td><td>${esc(p.phone)}</td><td>${esc(p.email)}</td><td><button class="s p" onclick="H.approve('${p.id}',true)">Approve</button> <button class="s d" onclick="H.approve('${p.id}',false)">Reject</button></td></tr>`))}</div>
+<div class="card"><h2>Add a teacher (the admin must approve)</h2><form onsubmit="H.reqTeacher(event)"><label>Full name<input name="name" required></label><label>Email<input name="email" type="email" required></label><label>Phone<input name="phone"></label><label>Class teacher of<select name="cls"><option value="">Not a class teacher</option>${opts(cls.map(c=>[c.id,c.name]))}</select></label>
+<fieldset style="border:1px solid var(--bd);border-radius:8px;flex:1 1 100%"><legend class="mut">Subjects taught</legend>${subj.map(x=>`<label style="flex-direction:row;gap:6px;align-items:center;color:var(--tx);margin-right:10px"><input type="checkbox" name="sub" value="${x.id}"> ${esc(x.name)}</label>`).join("")}</fieldset>
+<fieldset style="border:1px solid var(--bd);border-radius:8px;flex:1 1 100%"><legend class="mut">In these classes</legend>${cls.map(c=>`<label style="flex-direction:row;gap:6px;align-items:center;color:var(--tx);margin-right:10px"><input type="checkbox" name="tc" value="${c.id}"> ${esc(c.name)}</label>`).join("")}</fieldset><button class="p">Send for approval</button></form>
+<p class="mut">One teacher can be a class teacher and teach subjects too. Nothing is created until the admin approves; the teacher then signs up with this email and confirms it.</p>
+${tbl(["Teacher","Email","Duties","Status",""],inv.filter(i=>i.role==="subject_teacher"||i.role==="class_teacher").map(i=>`<tr><td>${esc(i.full_name)}</td><td>${esc(i.email)}</td><td>${esc(duty(i,cls,subj))}</td><td>${tag(INV[i.status])}${i.decision_note?`<div class="mut">${esc(i.decision_note)}</div>`:""}</td><td>${i.status==="pending"?`<button class="s d" onclick="H.cancelInv('${i.id}')">Cancel</button>`:""}</td></tr>`))}</div>
+${avgCard(avg||[])}
+<div class="card"><h2>Year-end (${set.current_year})</h2><form onsubmit="H.setYE(event)"><label>Year ends on<input type="date" name="d" value="${set.year_end}" required></label><button class="p">Save date</button><button type="button" class="d" onclick="yeAsk=true;render()">Run year-end now</button></form>${yeAsk?`<div class="msg warn" style="margin-top:10px">Promote now? Students with cleared fees move up, others are held, and next year’s fees are issued. This cannot be undone. <button type="button" class="s p" onclick="H.runYE()">Confirm</button> <button type="button" class="s" onclick="yeAsk=false;render()">Cancel</button></div>`:""}<p class="mut">After the year-end date the system promotes students automatically when their fees are cleared. Unpaid fees carry forward, up to ${set.max_arrears_years} years.</p></div>
+<div class="card"><h2>Edit parent emails</h2>${tbl(["Parent","Phone","Email (edit)","Status"],allp.map(p=>`<tr><td>${esc(p.full_name)}</td><td>${esc(p.phone)}</td><td><input type="email" style="width:100%" value="${esc(p.email)}" onchange="H.parentEmail('${p.id}',this.value)"></td><td>${tag(p.status)}</td></tr>`))}<p class="mut">After a change the parent signs in with the new email. No confirmation email is sent, so check the address carefully.</p></div>
+<div class="card"><h2>Students who have not paid fees</h2>${tbl(["Student","Status","Balance"],sum.map(s=>`<tr><td>${esc(s.full_name)}</td><td>${tag(s.status)}</td><td>${money(s.balance)}</td></tr>`))}</div>`};
+ 
+// ===== ADMIN =====
+VIEWS.admin=async()=>{
+  const[subj,inv]=await Promise.all([q(sb.from("subjects").select("id,name")),q(sb.from("staff_invites").select("*").order("created_at",{ascending:false}))]);
+  const[cls,sts,cts,staff,log]=await Promise.all([q(sb.from("classes").select("id,name,next_class_id,graduates").order("name")),q(sb.from("students").select("class_id,status")),
+    q(sb.from("class_teachers").select("class_id,profiles(full_name)")),q(sb.from("profiles").select("id,full_name,email,role,status").neq("role","parent").order("role")),
+    q(sb.from("audit_log").select("*").order("created_at",{ascending:false}).limit(15))]);
+  const allu=await q(sb.from("profiles").select("id,full_name,email,role").order("full_name"));
+  const open=inv.filter(i=>i.status==="pending").length;
+  return`<div class="card"><h2>Staff requests (${open} need your approval)</h2>${tbl(["Name","Email","Duties","Status",""],inv.map(i=>`<tr><td>${esc(i.full_name)}</td><td>${esc(i.email)}</td><td>${esc(duty(i,cls,subj))}</td><td>${tag(INV[i.status])}</td><td>${i.status==="pending"?`<button class="s p" onclick="H.decideInv('${i.id}',true)">Approve</button> <button class="s d" onclick="H.decideInv('${i.id}',false)">Reject</button>`:i.status==="approved"?`<button class="s d" onclick="H.cancelInv('${i.id}')">Cancel</button>`:""}</td></tr>`))}
+<h2 style="margin-top:16px">Add a head teacher or deputy</h2><form onsubmit="H.leader(event)"><label>Full name<input name="name" required></label><label>Email<input name="email" type="email" required></label><label>Phone<input name="phone"></label><label>Role<select name="role"><option value="head">Head teacher</option><option value="deputy">Deputy head</option></select></label><button class="p">Approve and invite</button></form><p class="mut">They sign up on the Staff sign-up tab with this email and confirm it.</p></div>
+<div class="card"><h2>Classes</h2><form onsubmit="H.addClass(event)"><label>New class name<input name="name" placeholder="e.g. Grade 8A" required></label><button class="p">Add class</button></form>
+${tbl(["Class (edit to rename)","Students","Class teacher","Promotes to",""],cls.map(c=>{const nx=c.graduates?"__grad":(c.next_class_id||"");return`<tr><td><input value="${esc(c.name)}" onchange="H.ren('${c.id}',this.value)"></td><td>${sts.filter(s=>s.class_id===c.id&&s.status!=="rejected").length}</td><td>${esc(cts.find(t=>t.class_id===c.id)?.profiles?.full_name||"Not assigned")}</td><td><select onchange="H.nxt('${c.id}',this.value)"><option value="" ${nx===""?"selected":""}>Not set</option>${cls.filter(x=>x.id!==c.id).map(x=>`<option value="${x.id}" ${nx===x.id?"selected":""}>${esc(x.name)}</option>`).join("")}<option value="__grad" ${nx==="__grad"?"selected":""}>Graduates (leaves school)</option></select></td><td><button class="s d" onclick="H.delClass('${c.id}')">Remove</button></td></tr>`}))}
+<p class="mut">A class can only be removed when it has no students and no class teacher. Classes with no next class set are never promoted.</p></div>
+<div class="card"><h2>Change a user’s password</h2><form onsubmit="H.setPw(event)"><label>User<select name="u">${opts(allu.map(u=>[u.id,`${u.full_name||u.email} (${RN[u.role]}, ${u.email})`]))}</select></label><label>New password (6+ characters)<input name="pw" type="password" minlength="6" required autocomplete="new-password"></label><button class="p">Change password</button></form><p class="mut">Tell the person their new password privately. Anyone already signed in stays signed in until their session ends.</p></div>
+<div class="card"><h2>Staff</h2>${tbl(["Name","Email","Role","Status",""],staff.map(p=>`<tr><td>${esc(p.full_name)}</td><td>${esc(p.email)}</td><td>${RN[p.role]}</td><td>${tag(p.status)}</td><td>${p.status==="active"&&p.id!==me.id?`<button class="s d" onclick="H.rm('${p.id}')">Remove</button>`:""}</td></tr>`))}</div>
+<div class="card"><h2>Activity log</h2>${tbl(["When","Action","Details"],log.map(l=>`<tr><td>${new Date(l.created_at).toLocaleString("en-KE")}</td><td>${esc(l.action)}</td><td class="mut">${esc(JSON.stringify(l.detail))}</td></tr>`))}</div>`};
+ 
+// ----- actions: each one calls the database, which enforces the rules -----
+const H={
+  async login(e){const d=fd(e);const{data,error}=await sb.auth.signInWithPassword({email:d.email.trim(),password:d.pw});
+    if(error)fl("Wrong email or password.","bad");else{try{await loadMe(data.user.id)}catch(x){fl(esc(x.message),"bad")}}render()},
+  async register(e){const d=fd(e);const{error}=await sb.auth.signUp({email:d.email.trim(),password:d.pw,options:{data:{full_name:d.name.trim(),phone:d.phone.trim()}}});
+    if(error)fl(/database|already|duplicate/i.test(error.message)?"That email or phone is already registered. One parent uses one account for all their children.":esc(error.message),"bad");
+    else{await sb.auth.signOut();mode="login";fl("Registration received. Status: pending head teacher approval.","ok")}render()},
+  async staffUp(e){const d=fd(e);const{error}=await sb.auth.signUp({email:d.email.trim(),password:d.pw,options:{data:{full_name:d.name.trim()}}});
+    if(error)fl(esc(error.message),"bad");else{await sb.auth.signOut();mode="login";fl("Check your email and confirm your address. Your staff account opens once your invitation is approved.","ok")}render()},
+  reqTeacher(e){const d=fd(e),f=e.target,sb2=[...f.querySelectorAll("input[name=sub]:checked")].map(x=>x.value),cs=[...f.querySelectorAll("input[name=tc]:checked")].map(x=>x.value);
+    const teaching=sb2.flatMap(s=>cs.map(c=>({subject_id:s,class_id:c})));
+    act(()=>rpc("request_teacher",{p_name:d.name.trim(),p_email:d.email.trim(),p_phone:d.phone||null,p_class:d.cls||null,p_teaching:teaching}),"Sent to the admin for approval.")},
+  cancelInv(id){act(()=>rpc("cancel_staff_invite",{p_invite:id}),"Request cancelled.")},
+  decideInv(id,a){act(()=>rpc("decide_staff_invite",{p_invite:id,p_approve:a,p_note:null}),a?"Approved. The person can now sign up with that email.":"Request rejected.")},
+  leader(e){const d=fd(e);act(()=>rpc("admin_invite_leader",{p_name:d.name.trim(),p_email:d.email.trim(),p_phone:d.phone||null,p_role:d.role}),"Invitation approved. They can now sign up with that email.")},
+  setPw(e){const d=fd(e);act(()=>fn({action:"set_password",user_id:d.u,password:d.pw}),"Password changed.")},
+  parentEmail(id,v){act(()=>fn({action:"set_parent_email",user_id:id,email:v.trim()}),"Parent email updated. They sign in with the new email.")},
+  async out(){await sb.auth.signOut();me=null;F=null;render()},
+  async mpesa(e){const d=fd(e);
+    const{data,error}=await sb.functions.invoke("mpesa-stk-push",{body:{student_id:d.s,phone:d.phone.trim(),amount:+d.amt}});
+    if(error||data?.error)fl(esc(data?.error||"M-Pesa is not connected yet. The server function still has to be set up."),"bad");
+    else fl("Check your phone and enter your M-Pesa PIN. Then press Refresh to see your updated balance.","ok");render()},
+  addKid(e){const d=fd(e);act(()=>q(sb.from("students").insert({full_name:d.name.trim(),class_id:d.cls,parent_id:me.id})),"Student added. The class teacher must accept them.")},
+  mark(e){const d=fd(e);act(()=>rpc("save_mark",{p_student:d.s,p_subject:d.sub,p_score:+d.sc,p_review:d.rev||null}),"Marks saved.")},
+  rev(id,v){act(()=>rpc("set_mark_review",{p_mark:id,p_review:v}),"Review saved.")},
+  decide(id,a){act(()=>rpc("class_decide_student",{p_student:id,p_accept:a}),a?"Student accepted.":"Student rejected.")},
+  att(e){const d=fd(e),ids=[...e.target.querySelectorAll("input[name=p]:checked")].map(x=>x.value);act(()=>rpc("save_attendance",{p_date:d.date,p_present:ids}),"Attendance saved.")},
+  fix(id,v){act(()=>rpc("class_correct_mark",{p_mark:id,p_score:+v}),"Mark corrected.")},
+  remk(id,v){act(()=>rpc("class_set_remark",{p_student:id,p_remark:v}),"Remark saved.")},
+  adj(e){const d=fd(e);act(()=>rpc("class_adjust_balance",{p_student:d.s,p_amount:+d.amt,p_reason:d.why}),"Balance updated and recorded.")},
+  pay(e){const d=fd(e);act(()=>rpc("record_payment",{p_student:d.s,p_amount:+d.amt,p_method:d.method,p_reference:d.ref,p_confirm_cash:!!d.ok}),"Payment recorded. Parent notified.")},
+  prompt(id){act(()=>rpc("prompt_parent",{p_student:id}),"Parent prompted.")},
+  approve(id,a){act(()=>rpc("approve_parent",{p_id:id,p_approve:a}),a?"Parent approved.":"Parent rejected.")},
+  setYE(e){const d=fd(e);act(()=>rpc("set_year_end",{p_date:d.d}),"Year-end date saved.")},
+  runYE(){yeAsk=false;act(async()=>{const r=await rpc("run_year_end",{p_force:true});fl(`Year-end complete: ${r.promoted} promoted, ${r.held} held.`,"ok")})},
+  addClass(e){const d=fd(e);act(()=>q(sb.from("classes").insert({name:d.name.trim()})),"Class added.")},
+  ren(id,v){act(()=>q(sb.from("classes").update({name:v.trim()}).eq("id",id)),"Class renamed.")},
+  nxt(id,v){const u=v==="__grad"?{next_class_id:null,graduates:true}:{next_class_id:v||null,graduates:false};act(()=>q(sb.from("classes").update(u).eq("id",id)),"Promotion path saved.")},
+  delClass(id){act(()=>q(sb.from("classes").delete().eq("id",id)),"Class removed.")},
+  rm(id){act(()=>rpc("remove_staff",{p_id:id}),"Staff member removed.")}
+};
+ 
+// ----- start -----
+async function render(){
+  const app=$("#app");
+  if(!configured){app.innerHTML=setupView();return}
+  if(!me){app.innerHTML=authView();return}
+  app.innerHTML=shell('<p class="mut">Loading…</p>');
+  let body;try{body=await VIEWS[me.role]()}catch(e){body=`<div class="msg bad">${esc(e.message)}</div>`}
+  app.innerHTML=shell(body);F=null;
+}
+(async()=>{
+  if(configured){try{const{data:{session}}=await sb.auth.getSession();if(session)await loadMe(session.user.id)}catch(e){}}
+  render();
+})();
+</script></body></html>
+ 
